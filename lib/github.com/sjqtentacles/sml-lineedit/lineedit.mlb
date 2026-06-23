@@ -1,0 +1,4 @@
+$(SML_LIB)/basis/basis.mlb
+../sml-readline/readline.mlb
+lineedit.sig
+lineedit.sml
