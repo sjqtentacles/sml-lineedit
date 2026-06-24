@@ -1,4 +1,5 @@
 package github.com/sjqtentacles/sml-lineedit
 
 require {
+  github.com/sjqtentacles/sml-readline
 }
