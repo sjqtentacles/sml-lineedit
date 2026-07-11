@@ -104,6 +104,37 @@ make all-tests   # both
 make clean
 ```
 
+## Example
+
+`make example` builds and runs [`examples/demo.sml`](examples/demo.sml), which
+feeds a whole string and a batch of key events (cursor movement, backspace, an
+ANSI escape sequence for the Up arrow) through the `Readline`/`LineEdit` state
+machine and drives one line to submission (output is byte-identical under
+MLton and Poly/ML):
+
+```
+sml-lineedit demo
+feedString "echo hi":
+  line    = > echo hi
+  cursor  = 9
+  actions = [Redraw,Redraw,Redraw,Redraw,Redraw,Redraw,Redraw]
+run [Left, Left, Backspace]:
+  line    = > echohi
+  cursor  = 6
+  actions = [Redraw,Redraw,Redraw]
+feedBytes "ESC [ A" (Up arrow):
+  line    = > git status
+  actions = [Redraw]
+  pending = <empty>
+runUntilSubmit "echo done" ++ Enter:
+  submitted = echo done
+classifiers:
+  isSubmit (Submit "x") = true
+  isCancel Cancel        = true
+  isEof Eof              = true
+  submitOf (Submit "x") = x
+```
+
 ## Project layout
 
 ```
